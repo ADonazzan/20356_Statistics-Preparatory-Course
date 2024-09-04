@@ -6,7 +6,7 @@
 
         \begin{equation}
         \begin{split}
-            \probP (a < X \leq b) = \probP (X \leq b) - \probP (X \leq a) = & \overbrace{F_x (b)}^{CDF} - F_x (a) \\
+            \mathbb{P} (a < X \leq b) = \mathbb{P} (X \leq b) - \mathbb{P} (X \leq a) = & \overbrace{F_x (b)}^{CDF} - F_x (a) \\
             = & \int_{a}^{b} \underbrace{f(x)}_{PDF} dx
         \end{split}     
         \end{equation}
@@ -52,7 +52,7 @@
                 F_x(t) = \begin{cases} 0 & \mbox{if } t<0 \\ \clubsuit & \mbox{if } 0 \leq t < 40 \\ 1 & \mbox{if } t \geq 40 \end{cases}
             \end{equation}
             \[
-            \clubsuit = \probP (x \leq t) = \probP (x \leq t | \textcolor{BrickRed}{R}) \cdot \probP (\textcolor{BrickRed}{R}) + \probP (x \leq t | \textcolor{ForestGreen}{G}) \cdot \probP (\textcolor{ForestGreen}{G}) = 
+            \clubsuit = \mathbb{P} (x \leq t) = \mathbb{P} (x \leq t | \textcolor{BrickRed}{R}) \cdot \mathbb{P} (\textcolor{BrickRed}{R}) + \mathbb{P} (x \leq t | \textcolor{ForestGreen}{G}) \cdot \mathbb{P} (\textcolor{ForestGreen}{G}) = 
             \]
             \[
             \frac{t}{40} \cdot \overbrace{\frac{40}{20+40}}^{prob. \ light=\textcolor{BrickRed}{R}} + 1 \cdot \overbrace{\frac{20}{20+40}}^{prob. \ light = \textcolor{ForestGreen}{G}} =  
