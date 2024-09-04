@@ -3,6 +3,7 @@ This is the repository for the notes taken during the Bocconi 20356 Statistics P
 
 # Editors
 Andrea Donazzan
+
 Stefano Graziosi
 
 # Credits
