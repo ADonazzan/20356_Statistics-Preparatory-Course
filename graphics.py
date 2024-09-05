@@ -89,8 +89,31 @@ def plot_gamma_pdf():
     plt.savefig(grapics_dir + "gamma_cdf.png", dpi = 300)
     plt.clf()
 
+def plot_weibull_pdf():
+    alpha = 2
+    lambda_ = 0.5
+    x = np.linspace(0, 10, 100)
+    y = np.array([alpha * lambda_ * (lambda_ * x) ** (alpha - 1) * np.exp(-lambda_ * x) for x in x])
+    plt.plot(x, y, label="alpha = 2, lambda = 0.5")
+    plt.xlabel("x")
+    plt.ylabel("f(x)")
+    plt.legend()
+    plt.savefig(grapics_dir + "weibull_pdf.png", dpi = 300)
+    plt.clf()
+
+    # weibull cdf
+    y = np.array([1 - np.exp(-lambda_ * i) for i in x])
+    plt.plot(x, y, label="alpha = 2, lambda = 0.5")
+    plt.xlabel("x")
+    plt.ylabel("F(x)")
+    plt.legend()
+    plt.savefig(grapics_dir + "weibull_cdf.png", dpi = 300)
+    plt.clf()
+    
+
 if __name__ == "__main__":
     plot_binomial_pdf()
     plot_poisson_pdf()
     plot_exponential_pdf()
     plot_gamma_pdf()
+    plot_weibull_pdf()
