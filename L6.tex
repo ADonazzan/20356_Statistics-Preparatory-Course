@@ -1,607 +1,253 @@
-% \newpage
-
-% \setchapterabstract{ }
-% \chapter{Conditional Probability}
-% \vspace{-1.5cm}
-
-
-% %%%%%%INSERT TOC BELOW 1ST SECTION%%%%%%%%%%%%
-
-% {\chaptoc\noindent\begin{minipage}[inner sep=0,outer sep=0]{0.9\linewidth}\section{Conditional Probability}\end{minipage}}
-
-% \Example{Consider an experiment where a coin is flipped three times. Let the probability of getting heads in each coin flip be $p$.}
-
-
-% Consider two random variables, \\
-% - $X$ representing the probability of getting heads in the $1^{st}$ and $2^{nd}$ coin flips;\\
-% - $Y$ representing the probability of getting tails in the $2^{nd}$ and $3^{rd}$ coin flips.
-% $$ X \sim \text{Bin}(2, p) \qquad Y \sim \text{Bin}(2, q) \qquad q=1-p $$
-
-% The following matrix represents the distribution of $X$ and $Y$, with the number of heads in the $1^{st}$ and $2^{nd}$ coin flips on the rows and the number of tails in the $2^{nd}$ and $3^{rd}$ coin flips on the columns. The marginal distribution of $X$ and $Y$ are given on the right and bottom of the matrix, respectively.
-% \[
-% \begin{array}{c|ccc|c}
-% & 0 & 1 & 2 & \\
-% \hline
-% 0 & 0 & pq^2 & q^3 & q^2 \\
-% 1 & p^2q & pq & pq^2 & 2pq\\
-% 2 & p^2 & p^2q & 0 & p^2\\
-% \hline
-% & p^2 & 2pq & q^2 &
-% \end{array}
-% \]
-
-
-\newpage
-
-\setchapterabstract{In day 6, we discuss the concept of conditional probability distributions in the context of discrete and continuous random variables. We then introduce the concept of sample mean and variance of a set of random variables. Finally, we discuss the concept sequences of random variables and their convergence.}
-\chapter{Conditional Probability and Sequences of R.V.s}
+\setchapterabstract{
+}
+\chapter{Expected Values and Variances}
 \vspace{-1.5cm}
 
-{\chaptoc\noindent\begin{minipage}[inner sep=0,outer sep=0]{0.9\linewidth}\section{Exercise}\end{minipage}}
+%%%%%%INSERT TOC BELOW 1ST SECTION%%%%%%%%%%%%
+
+
+{\chaptoc\noindent\begin{minipage}[inner sep=0,outer sep=0]{0.9\linewidth}
+    \section{Expected Value of a Linear Transformation}\end{minipage}}
 
 \[
-X \sim \text{Gamma}(\alpha, \lambda) \qquad Y \sim \text{Gamma}(\beta, \lambda)
+E(aX + b) = aE(X) + b
+\]
+
+This property shows that the expectation of a linear transformation of \(X\) follows this simple rule, where \(a\) is a constant multiplier and \(b\) is a constant shift.
+
+However, for non-linear transformations, the expectation does not necessarily follow through the transformation:
+\[
+E(g(X)) \neq g(E(X))
+\]
+
+This is incorrect in general. The only special case where this holds is for a constant function, or where \(g(x)\) is a linear transformation. For instance, \(E(1/X)\) is not \(1/E(X)\).
+
+
+\section{Expected Value of a Function}
+
+You can find the expected value of a function \( g(X) \) as:
+
+\[
+E(Y) = E(g(X))
+\]
+
+This can be computed without needing the explicit distribution of \( Y \). The method differs for discrete and continuous random variables:
+
+- For discrete variables: 
+
+\[
+E(g(X)) = \sum_i g(x_i) P(x_i)
+\]
+
+- For continuous variables: 
+
+\[
+E(g(X)) = \int_{-\infty}^{\infty} g(x) f_X(x) dx
+\]
+
+\Example{
+Expected value of a function with \(P(X = k) = \frac{1}{n}, \quad 1 \leq k \leq n\):
+Given X number of trials and \( P(X = k) = \frac{1}{n} \):
+\[
+E(x) = 1 \cdot \frac{1}{n} \dots + n \frac{1}{n} =  \frac{1}{n} \cdot (1 + 2 + 3) = \frac{n + 1}{2}
+\]
+}
+
+\Example{
+Example: Expected Value of \(X^2\)
+For example, given \( X \), the number of trials, and \( P(X = k) = \frac{1}{n}, \quad 1 \leq k \leq n \), the expected value can be computed as:
+\[
+E(X^2) = \sum_i x_i^2 P(x_i) \quad \text{or} \quad E(X^2) = \int_{-\infty}^{\infty} x^2 f_X(x) dx
+\]
+}
+
+\section{Variance of a Random Variable}
+The variance of a random variable \( X \) is:
+\[
+\text{Var}(X) = E[(X - E(E))^2] = E[(X - \mu)^2] = E(X^2 - 2\mu X + \mu^2) 
 \]
 \[
+E(X^2) - 2\mu E(X) + \mu^2 = E(X^2) - \mu^2  = E(X^2) - [E(X)]^2
+\]
+
+Chebishev Inequality: 
+For any R.V. P()
+\[
+P(|X - E(X)| \geq \eta) \leq \frac{\text{Var}(X)}{\eta^2}, then for \eta = k * \sigma \quad P(|X - E(X)| \geq k\sigma) \leq \frac{1}{k^2}
+\]
+
+This shows that variance is the difference between the expected value of \( X^2 \) and the square of the expected value of \( X \).
+
+\section{Variance of a Linear Transformation}
+For a linear transformation \( aX + b \), the variance follows the rule:
+\[
+\text{Var}(aX + b) = a^2 \text{Var}(X)
+\]
+
+The constant \( b \) shifts the expected value but does not affect the variance.
+
+\section{example 1}
+\[
+f_X(x) =
+\begin{cases} 
+\frac{1}{2\sqrt{x}} & 0 \leq x \leq 1 \\
+0 & \text{otherwise} \\
+\end{cases}
+\]
+
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = left,
+    xlabel = $x$,
+    ylabel = {$f_X(x)$},
+    ymin=0, ymax=2,
+    xmin=0, xmax=1,
+    width=0.5\textwidth
+]
+\addplot [
+    domain=0:1, 
+    samples=100, 
+    color=blue,
+]
+{1/(2*sqrt(x))};
+\end{axis}
+\end{tikzpicture}
+
+This is a valid density function because $\pi$ is greater than 0 and the integral from 0 to 1 is 1. 
+
+The cumulative distribution function is: 
+\[
+F_X(t) =
+\begin{cases} 
+0 & \text{if } t \leq 0 \\
+\sqrt{t} & \text{if } 0 < t < 1 \\
+1 & \text{if } t \geq 1 \\
+\end{cases}
+\]
+
+\begin{tikzpicture}
+\begin{axis}[
+    axis lines = left,
+    xlabel = $t$,
+    ylabel = {$F_X(t)$},
+    ymin=0, ymax=1.2,
+    xmin=0, xmax=1,
+    width=0.5\textwidth
+]
+\addplot [
+    domain=0:1, 
+    samples=100, 
+    color=blue,
+]
+{sqrt(x)};
+\addplot [
+    domain=1:2,
+    samples=100,
+    color=blue,
+]
+{1};
+\end{axis}
+\end{tikzpicture}
+
+The expected value is: 
+\[
+E(x) = \int_0^1 x \cdot f_X(x)dx = \int_0^1 x \cdot \frac{1}{2\sqrt{x}}dx = \int_0^1 \frac{1}{2} \cdot \sqrt{x}dx =[ \frac{1}{2} \cdot \frac{2}{3} \cdot x^{3/2}]_0^1 = \frac{1}{3}
+\]
+The expected value of $X^2$ is: 
+\[
+E(X^2) = \int_0^1 x^2 \cdot f_X(x)dx = \int_0^1 x^2 \cdot \frac{1}{2\sqrt{x}}dx = \int_0^1 \frac{1}{2} \cdot x^{3/2}dx = [\frac{1}{2} \cdot \frac{2}{5} \cdot x^{5/2}]_0^1 = \frac{1}{5}
+\]
+The variance is: 
+\[
+Var(X) = \frac{1}{5} - (\frac{1}{3})^2 = \frac{4}{45}
+\]
+
+\section{Deriving the Marginal Distribution Function of Y}
+
+Given \(X\) and \(Y = g(X)\), if \(g\) is differentiable and invertible (meaning \(y = g(x) \leftrightarrow x = h(y)\)), then 
+\[
+f_Y(y) = f_X(h(y)) \cdot \left| h'(y) \right|
+\]
+
+\section{Example 1}
+Given the probability density function of \(X\) as:
+\[
+f_X(x) =
 \begin{cases}
-    V = \frac{x}{y} \\
-    W = X + Y
+\frac{x-1}{2} & \text{if } 1 \leq x \leq 3 \\
+0 & \text{otherwise}
 \end{cases}
 \]
+Then using the indicator function:
+\[ f_X(x) = \frac{x-1}{2} \cdot \mathbb{1}_{[1,3]}(x) \]
+Let's consider the transformation \(Y = \ln(X)\). It is invertible and differentiable with \(x = h(y) = e^y\). Applying the aforementioned formula, we get:
 \[
-        \begin{cases}
-            V = \frac{x}{y} \\
-            W = Y(1+V)
-        \end{cases}
+f_Y(y) = f_X(h(y)) \cdot |h'(y)| = \frac{e^y - 1}{2} \cdot \mathrm{I}_{[\ln(1), \ln(3)]}(y) \cdot e^{y} \cdot |e^{y}| = \frac{e^{y}(e^{y} - 1)}{2} \cdot \mathrm{I}_{[\ln(1), \ln(3)]}(y)
 \]
+Let's consider the transformation \(Y = X^2\). Generally not invertible, but it is on the support 1-3 such that \(x = h(y) = \sqrt{y}\). 
 \[
-    \begin{cases}
-        X = \frac{VW}{1+V} \\
-        Y = \frac{W}{1+V}
-    \end{cases}
-\]
-\[
-        J = det \begin{vmatrix}
-            \frac{W(1+V)-vw}{(1+V)^2} & \frac{v}{1+v} \\
-            -\frac{w}{(1+v)^2} & \frac{1}{1+v}
-        \end{vmatrix} = \frac{w}{(1+v)^2}
+f_Y(y) = f_X(\sqrt{y}) \cdot \left|\frac{1}{2\sqrt{y}}\right| = \frac{\sqrt{y} - 1}{2} \cdot \mathrm{I}_{[1, 9]}(y) \cdot \sqrt{y} \cdot \frac{1}{2\sqrt{y}} = \frac{\sqrt{y} - 1}{4\sqrt{y}} \cdot \mathrm{I}_{[1, 9]}(y)
 \]
 
-The density of $X$ and $Y$ is given by:
-\[
-f_{X, Y}(x, y) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x} \frac{\lambda^\beta}{\Gamma(\beta)} y^{\beta-1} e^{-\lambda y} 
+\section{Deriving the Cumulative Distribution Function of Y}
+\[F_y(t) = P(Y \leq t) = P(g(X) \leq t) - P(g(X) \leq t) = P (X \in At)
 \]
-X and Y are two independent random variables, therefore the joint distribution of V and W is given by:
+\section{Example 2}
 \[
-f_{V, W}(v, w) = f_{X, Y}(x, y) \left|J\right| = f_X\left(\frac{vw}{1+v}\right) f_Y\left(\frac{w}{1+v}\right) \frac{w}{(1+v)^2}
-\]
-\[
-f_{V, W}(v, w) = \frac{\lambda^{\alpha+\beta}}{\Gamma(\alpha)\Gamma(\beta)} (\frac{vw}{1+v})^{\alpha-1} e^{-\lambda \frac{vw}{1+v}} (\frac{w}{1+v})^{\beta-1} e^{-\lambda \frac{w}{1+v}} \frac{w}{(1+v)^2}
-\]
-\[
-f_{V, W}(v, w) = \frac{\lambda^{\alpha+\beta}}{\Gamma(\alpha)\Gamma(\beta)} \frac{v^{\alpha-1}}{(1+v)^{\alpha + \beta}} w^{\alpha + \beta-1} e^{-\lambda w} \mathbbm{1}_{(0, +\infty)}(v) \mathbbm{1}_{(0, +\infty)}(w)
-\]
-
-If the joint density is the product of two functions, then the two random variables are independent.
-
-The joint density is therefore
-\[
-f_{V, W}(v, w) = \frac{\gamma^{\alpha+\beta}}{\Gamma(\alpha)\Gamma(\beta)} \frac{v^{\alpha-1}}{(1+v)^{\alpha + \beta}}  \frac{\lambda^{\alpha +\beta}}{(1+v)^(\alpha + \beta)} e^{-\lambda w} \mathbbm{1}_{(0, +\infty)}(v) \mathbbm{1}_{(0, +\infty)}(w)
-\]
-
-\section{Conditional Distributions}
-\subsection*{Discrete Case}
-
-Consider two random variables $X$ and $Y$ with the following joint distribution:
-\[
-\begin{array}{c|ccc}
-    & 1 & 2 & 3  \\
-    \hline
-    0 & 0.1 & 0.2 & 0.1 \\
-    1 & 0.2 & 0.1 & 0.3
-\end{array}
-\]
-
-We can calculate the conditional distribution\sn{
-    \textbf{Conditional Distribution:} the probability distribution of a random variable, calculated according to the rules of conditional probability after observing the realization of another random variable.
-} of $Y$ given $X$:
-\[
-P(Y = 1 | X = 0) = \frac{P(Y=1, X=0)}{P(X=0)} = \frac{0.1}{0.4}
-\]
-More in general:
-\[
-P_{Y|X}(y_i | x_i) = \frac{P_{XY}(y_i, x_i)}{P_{X}(x_i)}
-\]
-Expected values can be evaluated in the same way:
-\[
-E(Y|X = 0) = 1 \cdot 0.25 + 2 \cdot 0.5 + 3 \cdot 0.25 = 2
-\]
-The same can be done for the variance:
-\[
-Var(Y|X = 0) = E(Y^2|X = 0) - E(Y|X = 0)^2
-\]
-\[
-E(Y^2|X = 0) = 1^2 \cdot 0.25 + 2^2 \cdot 0.5 + 3^2 \cdot 0.25 = 4.5
-\]
-\[
-Var(Y|X = 0) = 4.5 - 2^2 = 0.5
-\]
-
-\subsection*{Continuous Case}
-
-\begin{equation*}
-    f_{XY}(x,y) = \begin{cases}
-        \frac{15}{8}xy^2 \qquad (x,y) \in T \qquad = \frac{15}{8} \mathbbm{1}_{(0,1)}(x) \mathbbm{1}_{(0,2x)}(y) \\
-        0 \qquad \text{otherwise}
-    \end{cases}
-\end{equation*}
-
-Can we construct the conditional distribution of $X$ and $Y$?
-In this case, we cannot use the formula $P_{Y|X}(y_i | x_i) = \frac{P_{XY}(y_i, x_i)}{P_{X}(x_i)}$ because the probability of $X$ is zero. We can, however, use the formula for the continuous case:
-
-\[
-f_{Y|X}(y|x) = \frac{\frac{15}{8}xy^2\mathbbm{1}_{(0,1)}(x) \mathbbm{1}_{(0,2x)}(y)}{5x^4 \mathbbm{1}_{(0,1)}(x)} = \frac{3}{8}\frac{y^2}{x^3} \mathbbm{1}_{(0,2x)}(y)
-\]
-
-We can now calculate the expected value of $Y$ given $X$, as the integral of $y$ times the conditional density of $Y$ given $X$:
-\[
-E(Y|X = x) = \int_{-\infty}^{+\infty} y f_{Y|X}(y|x) dy = \int_{-\infty}^{+\infty} y \frac{3}{8}\frac{y^2}{x^3} \mathbbm{1}_{(0,2x)}(y) dy
-\]
-\[
-E(Y|X = x) = \int_{0}^{2x} \frac{3}{8} y^3 x^{-3} dy = \frac{3}{8} x^{-3} \frac{y^4}{4} \Big|_{0}^{2x} = \frac{3}{8} x^{-3} \frac{16x^4}{4} = \frac{3}{2}x
-\]
-The variance can be calculated in the same way:
-\[
-Var(Y|X = x) = E(Y^2|X = x) - E(Y|X = x)^2
-\]
-\[
-E(Y^2|X = x) = \int_{-\infty}^{+\infty} y^2 f_{Y|X}(y|x) dy = \int_{0}^{2x} \frac{3}{8} y^4 x^{-3} dy
-\]
-\[
-= \frac{3}{8} x^{-3} \frac{y^5}{5} \Big|_{0}^{2x} = \frac{12}{5}x^2
-\]
-So the variance is:
-\[
-Var(Y|X = x) = \frac{12}{5}x^2 - \left(\frac{3}{2}x\right)^2 = \frac{3}{20}x^2
-\]
-
-\Remark{
-If, in the discrete or continuous case, you construct the conditional distribution of $Y$ given $X$, the expected value and variance of $Y$ given $X$ are functions of $X$. This holds true unless $X$ and $Y$ are independent.
-}
-
-\Example{
-    Let's go back to the previous example:
-    \[
-    \begin{array}{c|ccc}
-        & 1 & 2 & 3  \\
-        \hline
-        0 & 0.1 & 0.2 & 0.1 \\
-        1 & 0.2 & 0.1 & 0.3
-    \end{array}
-    \]
-    We know that $ E(Y|X = 0) = 2 $, what is $ E(Y|X = 1) $?
-}
-
-\[
-E(Y|X = 1) = 1 \cdot \frac{0.2}{0.6} + 2 \cdot \frac{0.1}{0.6} + 3 \cdot \frac{0.3}{0.6} = \frac{13}{6}
-\]
-
-As in the continuous case, the expected value of $Y$ given $X$ is a function of $X$.
-\[
-E(X|Y = x) = h(x) = \begin{cases}
-    2 \qquad x = 0 \\
-    \frac{13}{6} \qquad x = 1
+F_x(t) = 
+\begin{cases}
+0 & \text{if } t \leq 1 \\
+\frac{(t -1)^2}{4} & \text{if } 1 < t < 3 \\
+1 & \text{if } t \geq 3
 \end{cases}
 \]
 
-\subsection*{General case}
+If Y = \(X^2\), then the CDF of Y is:
 \[
-E(Y|X) = h(X) \leftarrow \text{random variable}
+F_Y(t) = P(Y \leq t) = P(X^2 \leq t) = P(X \leq \sqrt{t})
 \]
-In this case, there is no $X = x$ in the conditional expectation, so we need to calculate the expected value of $Y$ given $X$ as a function of $X$, not of $x$.
-
-So, in the example above:
+Two cases: 
 \[
-E(Y|X) = \frac{3}{2}X
-\]
-
-\Definition{
-    The conditional expectation of $Y$ given $X$ is a random variable $h(X)$. (a function of $X$)\\
-    \[
-    E(Y|X) = h(X)
-    \]
-    \textbf{Properties}:\\
-        - $E(E(Y|X)) = E(Y)$ (Tower Property) \\
-        - $E(Yg(X)|X) = g(X)E(Y|X)$ \\
-        - $Var(Y|X)$ is a r.v. \\
-        - $Var(Y) = Var(E(Y|X)) + E(Var(Y|X))$
-}{Conditional Expectation}
-
-
-\Example{
-    Suppose that $Y$ is a random variable ``duration of battery", and $X$ is the r.v. ``percentage of an element"
-    \[
-    X \sim \text{Uniform}(1, 3) \qquad (Y|X = x) \sim \text{Exp}(\lambda = x)
-    \]
-    What is the average duration of the battery? i.e. $E(Y)$
-}
-
-\[
-E(Y|X=x)=\frac{1}{x} \qquad E(Y|X) = \frac{1}{X}
-\]
-
-Therefore, we can use the Tower Property:
-\[
-E(Y) = E(E(Y|X)) = E\left[\frac{1}{X}\right] = \int_{1}^{3} \frac{1}{x} \frac{1}{2} dx = \frac{1}{2} \int_{1}^{3} \frac{1}{x} dx = \frac{1}{2} \ln(3)
-\]
-
-\Example{
-    The duration of a call is:
-    \(
-    T_1 \sim \text{Exp}(\lambda = \frac{1}{2})
-    \) \\
-    The number of calls is:
-    \(
-    N \sim \text{Poisson}(\lambda = 60)
-    \)\\
-    The total time spent on calls is therefore:
-    \[
-    Y = \sum_{i=1}^{N} T_i
-    \] \\
-    What is the expected value and variance of the total time spent on calls?
-}
-
-\[
-(Y|N = n) = \sum_{i=1}^{n} T_i \sim \text{Gamma}(n, \frac{1}{2})
-\]
-
-\[
-E(Y|N=n) = E(Ga(n, \frac{1}{2})) = \frac{n}{\lambda} = 2n
-\]
-\[
-E(Y) = E(E(Y|N)) = E(2N) = 2E(N) = 2 \cdot 60 = 120
-\]
-Calculating the variance:
-\[
-Var(Y|N=n) = n \cdot \frac{1}{\lambda^2} = 4n
-\]
-\[
-Var(Y) = Var(E(Y|N)) + E(Var(Y|N))
-\]
-\[
-Var(Y) = Var(2N) + E(4N) = 4Var(N) + 4E(N) = 4 \cdot 60 + 4 \cdot 60 = 480
-\]
-
-\Example{
-    Suppose $X_1, \ldots , X_n$ are independent and identically distributed random variables with $X_n \sim \text{Bern}(p)$.\\
-    Let $Y = \sum_{i=1}^{n} X_i$. \\
-    What is $E(X_1 | Y)$?
-}
-
-The distribution of $Y$ is a binomial: $Y \sim \text{Bin}(n, p)$.
-\[
-E(X_1 | Y = k) = 0 \cdot P(X_1 = 0 | Y = k) + 1 \cdot P(X_1 = 1 | Y = k)
-\]
-\[
-E(X_1 | Y = k) = P(X_1 = 1 | Y = k) = \frac{P(X_1 = 1, Y = k)}{P(Y = k)}
-\]
-The possible values of $k$ are $0, 1, \ldots , n$, so:
-\[
-    E(X_1 | Y = k) = \begin{cases}
-        0 \qquad k = 0 \\
-        ? \qquad k = 1, \ldots , n
-    \end{cases}
-\]
-We can rewrite the conditional expectation as:
-\[
-E\left(X_1 | \sum_{i=1}^{n} X_i = k\right) = \frac{P(X_1 = 1, \sum_{i=1}^{n} X_i = k)}{P(\sum_{i=1}^{n} X_i = k)}
-\]
-The two events in the numerator are not independent, so we have to rewrite it to solve the problem.
-The probability of $X_1 = 1$ and $\sum_{i=1}^{n} X_i = k$ is the same as the probability of $X_1 = 1$ and $X_2 + \ldots + X_n = k-1$:
-\[
-P(X_1 = 1, \sum_{i=1}^{n} X_i = k) = \frac{P(X_1 = 1, \sum_{i=2}^{n} X_i = k-1)}{P(\sum_{i=1}^{n} X_i = k)}
-\]
-\[
-= \frac{P(X_1 = 1)P(\sum_{i=2}^{n} X_i = k-1)}{P(\sum_{i=1}^{n} X_i = k)} = \frac{p\cdot \binom{n-1}{k-1}p^{k-1}q^{n-k}}{\binom{n}{k}p^kq^{n-k}}
-\]
-\[
-= \frac{\binom{n-1}{k-1}}{\binom{n}{k}} = \frac{\frac{(n-1)!}{(k-1)!(n-k)!}}{\frac{n!}{k!(n-k)!}} = \frac{k}{n}
-\]
-The final result is therefore:
-\[    
-E(X_1 | Y = k) = \begin{cases}
-    0 \qquad k = 0 \\
-    \frac{k}{n} \qquad k = 1, \ldots , n
+\begin{cases} 
+    0 & \text{if } t \leq 0 \\  P(-\sqrt{t} \leq  x \leq \sqrt{t} ) & \text{if } t > 0 
 \end{cases}
-= \frac{k}{n}
-\]
-Therefore:
-\[
-E(X_1 | Y) = \frac{Y}{n}
-\]
-
-\section{Sample Mean and Variance}
-
-Take $X_1, \ldots , X_n$ i.i.d. We can define the sample mean $\bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i$.
-
-Defining $m = E(X_1)$, we can calculate the expected value of the sample mean:
-
-\[
-E(\bar{X}) = E\left(\frac{1}{n} \sum_{i=1}^{n} X_i\right) = \frac{1}{n} \sum_{i=1}^{n} E(X_i) = \frac{1}{n} \cdot n \cdot m = m
-\]
-
-With the variance of $X_1$ defined as $v$, we can calculate the variance of the sample mean:
-
-\[
-Var(\bar{X}) = Var\left(\frac{1}{n} \sum_{i=1}^{n} X_i\right) = \frac{1}{n^2} \sum_{i=1}^{n} Var(X_i) = \frac{1}{n^2} \cdot n \cdot v = \frac{v}{n}
-\]
-
-This holds true for any sampling distribution.
-
-\subsection*{Sample Variance}
-
-The sample variance is defined differently, depending on wether $m$ is known or not.
-
-\textbf{If $m$ is known}, the sample variance is:
-\[
-S_0^2 = \frac{1}{n} \sum_{i=1}^{n} (X_i - m)^2 = \frac{1}{n} \sum_{i=1}^{n} X_i^2 - 2m \sum_{i=1}^{n} X_i + n m^2
-\]
-
-The expected value of the sample variance is $E(S_0^2) = v$.
-
-\textbf{If $m$ is unknown}, the sample variance is:
-
-\[
-S_n^2 = \frac{1}{n-1} \sum_{i=1}^{n} (X_i - \bar{X_n})^2
-\]
-This can be rewritten as:
-\[
-S_n^2 = \frac{1}{n-1} \left[\sum_{i=1}^{n} X_i^2 - \underbrace{2\bar{X_n} \sum_{i=1}^{n} X_i}_{=2\bar{X}_n^2} + n \bar{X_n}^2\right]
 \]
 \[
-S_n^2 = \frac{1}{n-1} \left[\sum_{i=1}^{n} X_i^2 - n \bar{X_n}^2\right]
-\]
-
-\subsection*{Case of a Normal Distribution}
-
-Take $X_1, \ldots , X_n$ i.i.d. with $X_i \sim \text{N}(\mu, \sigma^2)$.
-Then the sample mean $\bar{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i$ is normally distributed with:
-$\bar{X}_n \sim \text{N}(\mu, \frac{\sigma^2}{n})$.
-
-The sample variance in the case where $m$ is known is distributed as:
-\[
-\frac{n S_0^2}{\sigma^2} \sim \chi^2(n)
-\]
-
-In the case where $m$ is unknown, the sample variance is distributed as:
-\[
-\frac{(n-1) S_n^2}{\sigma^2} \sim \chi^2(n-1)
-\]
-
-\section{Sequence of R.V.s}
-
-\Definition{
-In a sequence of real numbers $a_1, a_2, \ldots , a_n$, the limit is defined as:
-\[ 
-\lim_{n \to \infty} a_n = L \in \mathbb{R} \quad \forall \epsilon > 0 \quad \exists n_\epsilon \in \mathbb{N} \quad | \quad \forall n \geq n_\epsilon \implies  |a_n - L| < \epsilon
-\]
-}{Limit of a Sequence}
-
-Intuitively, the limit exists if there exists an $n$ large enough so that after that $n$ all the terms are within $\epsilon$ distance of the limit. ($\text{dist}(a_n, L) < \epsilon$)
-
-Limits can be defined in spaces other than $\mathbb{R}$, as long as there is a way to define the distance between two elements.
-
-\textbf{Sequence of Random Variables}
-
-Take a sequence of random variables $X_1, X_2, \ldots , X_n, \ldots$.
-Suppose that all the random variables are defined on the same probability space $(\Omega, \mathcal{A}, P)$.
-
-\Definition{
-    We say that $X_n \to Y$ surely if:
-    \[
-    \forall \omega \in \Omega \quad X_n(\omega) \to Y(\omega)
-    \]
-}{Sure Convergence}
-
-In other words, for every sequence of outcomes $X_n(\omega)$, the limit of the sequence is $X(\omega)$.
-
-This definition is very strong, and is not very useful in practice.
-
-\Definition{
-    We say that $X_n \to Y$ almost surely if:
-    \[
-    P(\{\omega \in \Omega | X_n(\omega) \to Y(\omega)\}) = 1
-    \]
-}{Almost Sure Convergence}
-
-In other words, the set of outcomes for which the sequence of random variables converges to the limit has probability 1.
-
-Property:
-\[
-g: \mathbb{R} \to \mathbb{R} \quad \text{continuous} \quad \implies \quad g(X_n) \to g(Y) \quad \text{almost surely}
-\]
-
-\Definition{
-    We say that $X_n \to Y$ in probability if:
-    \[
-    \forall \epsilon > 0 \quad \lim_{n \to \infty} P(|X_n - Y| < \epsilon) = 1
-    \]
-}{Convergence in Probability}
-
-In other words, the probability that the distance between $X_n$ and $Y$ is less than $\epsilon$ converges to 1 as $n$ goes to infinity.
-
-\Definition{
-    We say that $X_n \to Y$ in mean of order $k \geq 1$ if:
-    \[
-    E(|X_n - Y|^k) \to 0
-    \]
-}{Convergence in Mean of Order $k$}
-
-\Definition{
-    We say that $X_n \to Y$ in quadratic mean if:
-    \[
-    E(|X_n - Y|^2) \to 0
-    \]
-}{Convergence in Quadratic Mean}
-
-
-From a sequence of random variables, we can define the sequence of sample means:
-\[
-\bar{X_1} = X_1 \quad \bar{X_2} = \frac{X_1 + X_2}{2} \quad \bar{X_3} = \frac{X_1 + X_2 + X_3}{3} \quad \ldots
-\]
-\[
-\bar{X}_n = \frac{1}{n} \sum_{i=1}^{n} X_i
-\]
-
-We can demonstrate that the sample mean converges to the expected value of the random variable:
-
-\[
-Var(\bar{X}_n) = \frac{1}{n^2} \sum_{i=1}^{n} Var(X_i) = \frac{1}{n^2} \cdot n \cdot v = \frac{v}{n}
-\]
-\[
-E(|\bar{X}_n - m|^2) = Var(\bar{X}_n) = \frac{v}{n} \to 0
-\]
-
-\Definition{
-    If $X_1, X_2, \ldots , X_n$ are i.i.d. with $E(X_i) = m$ and $Var(X_i) = v$, then:
-    \[
-    \bar{X}_n \to m \quad \text{almost surely}
-    \]
-}{Strong Law of Large Numbers}
-
-If $X_n \to Y$ almost surely, then $X_n \to Y$ in probability. The converse is not true.
-\[
-X_n \to Y \text{ almost surely} \quad \underset{\nLeftarrow}{\Rightarrow} \quad X_n \to Y \text{ in probability}
-\]
-
-Moreover, if $X_n \to Y$ in order $k$, then $X_n \to Y$ in probability. The converse is again not true.
-\[
-X_n \to Y \text{ in order } k \quad \underset{\nLeftarrow}{\Rightarrow} \quad X_n \to Y \text{ in probability}
-\]
-
-\subsection*{Convergence in Distribution}
-
-\Definition{
-    We say that $X_n \to Y$ in distribution if:
-    \[
-    F_{X_n}(t) \to F_Y(t) \quad \forall t \quad \text{where} \quad F_{Y} \quad \text{is continuous}
-    \]
-}{Convergence in Distribution}
-
-Convergence in distribution is a weaker form of convergence than other forms of convergence.
-Link between convergence in distribution and convergence in probability:
-\[
-X_n \to Y \text{ in probability} \quad \Rightarrow \quad X_n \to Y \text{ in distribution}
-\]
-
-The converse is generally not true. However, if $Y$ is a constant, then the two forms of convergence are equivalent.
-
-\[
-X_n \to y \in \mathbb{R} \text{ in distribution} \quad \Leftrightarrow \quad X_n \to y \in \mathbb{R} \text{ in probability}
-\]
-
-\Example{
-    Take a sequence of i.i.d. random variables $X_1, X_2, \ldots , X_n, \ldots$ with:
-    \[ 
-    X_i \sim \text{Unif}(0,1)
-    \]
-    We take the sequence $Y_n = \min(X_1, \ldots , X_n)$.
-    What is the limit of $Y_n$?
-}
-
-Recall that if $V_n = \min(X_1, \ldots , X_n)$, then $F_{V_n}(t) = 1- [1-F_x(t)]^n.$ 
-
-Since the distribution function of $X$ is:
-\[
-F_X(t) = \begin{cases}
-    0 \qquad t < 0 \\
-    t \qquad 0 \leq t \leq 1 \\
-    1 \qquad t > 1
+F_X(\sqrt{t}) - F_X(-\sqrt{t}) = 
+\begin{cases} 
+0, & \text{if } \sqrt{t} < 1 \\ 
+\left( \frac{\sqrt{t} - 1}{4} \right)^2, & \text{if } 1 \leq \sqrt{t} < 3 \\ 
+1, & \text{if } \sqrt{t} \geq 93
+\end{cases}
+=
+\begin{cases}
+0, & \text{if } t < 1 \\ 
+\left( \frac{\sqrt{t} - 1}{4} \right)^2, & \text{if } 1 < t < 9 \\ 
+1, & \text{if } t \geq 9
 \end{cases}
 \]
 
-The distribution function of $V_n$ is:
+\section{Example 3}
+\[f_X = \frac{x^2}{18} \cdot \mathbb{1}_{[-3,3]}(x)\]
+\[y = x^2: \text{Not invertible, use formula for } F_X.\]
 \[
-F_{V_n}(t) = \begin{cases}
-    0 \qquad t < 0 \\
-    1 - (1-t)^n \qquad 0 \leq t \leq 1 \\
-    1 \qquad t > 1
+F_X(t) =
+\begin{cases}
+    0 & \text{if } t < -3 \\
+    \frac{t^2 + 27}{54} & \text{if } -3 \leq t \leq 3 \\
+    0 & \text{if } t > 3
+\end{cases}
+\rightarrow F_Y(t) = 
+\begin{cases}
+    0 & \text{if } t < 0 \\
+    * & \text{if } 0 \leq t \leq 9 \\
+    1 & \text{if } t > 9
 \end{cases}
 \]
 
-For the convergence in distribution, we need to calculate the limit of $F_{V_n}(t)$ as $n$ goes to infinity:
-\[
-\lim_{n \to \infty} F_{V_n}(t) = \begin{cases}
-    0 \qquad t \leq 0 \\
-    1 \qquad t > 0
-\end{cases}
+Clearly, being:
+\[ F_Y(t) = P(y \leq t) = P(x^2 \leq t) = P(-\sqrt{t} \leq x \leq \sqrt{t}) = \]
+\[F_X(\sqrt{t}) - F_X(-\sqrt{t}) = \frac{\sqrt{t}^2 + 27}{54} - \frac{-\sqrt{t}^2 + 27}{54} = \frac{t}{27} \]
+Then:
+\[ * = f_Y = \frac{dF_Y}{dt} = \frac{1}{27} \cdot I_{[0,9]}(y) 
 \]
-
-This is not the distribution function of any random variable, because it has a jump at 0, and in that jump the value is continuous from the left but not from the right.
-
-This is the distribution of a discrete random variable, as it is not continuous but piecewise constant.
-From the definition oif the limit of a sequence of random variables, we can define the limit of $F_{V_n}(t)$ as:
-\[
-F_Y(t) = \begin{cases}
-    0 \qquad t < 0 \\
-    1 \qquad t \geq 0
-\end{cases}
-\]
-
-Which is the distribution function of a random variable $Y$ that is equal to 0 with probability 1.
-
-\section{Central Limit Theorem}
-\Definition{
-    Let $X_1, \ldots, X_n$ be i.i.d random variables with $m = E(X_i)$ and $v = Var(X_i)$.\\
-    \[
-    \mathbb(P)\left(\frac{\bar{X}_n - m}{\sqrt{\frac{v}{n}}} \leq t\right) \to \Phi(t) \quad \text{as} \quad n \to +\infty
-    \]
-    or
-    \[
-    \frac{\bar{X}_n - m}{\sqrt{\frac{v}{n}}} \to \text{N}(0,1) \quad \text{in distribution}
-    \]
-    For this to hold, we have to assume that the random variables have finite mean and variance. In other words, $E(X_i^2) < +\infty$.
-}{Central Limit Theorem}
-
-In other words, if $n$ is ``large enough", then the distribution of the sample mean is approximately normal with $\bar{X_n} \approx N(m, \frac{v}{n})$.
-
-If we multiply by $n$, we get:
-\[
-\sum_{i=1}^{n} X_i \approx N(nm, nv)
-\]
-
-Take $Y \sim \text{Bin}(n,p)$, then if $n$ is large enough and $p$ is not too close to 0 or 1, then $Y \approx N(np, npq)$.
-
-With a binomial distribution $Y \sim \text{Bin}(n,p)$, if $n \to +\infty$ and $p \to 0$ such that $np \to \lambda$, then $Y \approx \text{Po}(\lambda)$. In other words, $X_n \to P(\lambda)$ in distribution.
-
-Poisson random variables are also approximately normal if $\lambda$ is large enough.\sn{The Poisson distribution with parameter $\lambda$ is the sum of $\lambda$ Poisson random variables with parameter 1.}
-
-In the case of Gamma distributions $Y\sim \text{Ga}(\alpha, \lambda)$, if $\alpha$ is large enough, then $Y \approx N(\alpha/\lambda, \alpha/\lambda^2)$.\sn{The Gamma distribution with parameters $\alpha$ and $\lambda$ is the sum of $\alpha$ exponential random variables with parameter $\lambda$.}
-
-For a Chi-squared distribution with $n$ degrees of freedom, if $n$ is large enough, then $X \approx N(n, 2n)$.\sn{The Chi-squared distribution with $n$ degrees of freedom is the sum of $n$ standard normal random variables squared ($\chi^2$ with 1 d.f.).}
-
-\Definition{
-Let $X_n \to X$ in distribution. If $Y_n \to Y$ in probability, then:
-\[
-X_n + Y_n \to X + Y \quad \text{in distribution}
-\]
-\[
-X_n \cdot Y_n \to X \cdot Y \quad \text{in distribution}
-\]
-$\forall n  \quad P(Y_n = 0) = 0$ and $y \neq 0$.
-}{Slutsky's Theorem}
-
-\textbf{Sampling from a Normal Distribution}
-
-Take $X_1, X_2, \ldots , X_n$ i.i.d. with $X_i \sim N(\mu, \sigma^2)$.
-\[
-\frac{\bar{X}_n - \mu}{\sqrt{\frac{S_n^2}{n}}} = \underbrace{\frac{\bar{X}_n - \mu}{\sqrt{\frac{\sigma^2}{n}}}}_{\sim N(0,1)} \underbrace{\sqrt{\frac{\sigma^2}{S_n^2}}}_{\to 1} \to Z \sim N(0,1) \text{in distribution}
-\]
-Therefore, the distribution is approximately $N(0,1)$.
-
-\textbf{Sampling not from a Normal Distribution}
-If $m = E(X_i)$ and $v = Var(X_i)$, then:
-\[
-\frac{\bar{X}_n - \mu}{\sqrt{\frac{S_n^2}{n}}} = \underbrace{\frac{\bar{X}_n - \mu}{\sqrt{\frac{v}{n}}}}_{\sim Z} \underbrace{\sqrt{\frac{v}{S_n^2}}}_{\to 1} \to Z \sim N(0,1) \text{in distribution}
-\]
-
